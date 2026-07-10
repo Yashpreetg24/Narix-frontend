@@ -1,12 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useTasks } from '../hooks/useTasks';
+import { useDebounce } from '../hooks/useDebounce';
 import Column from './Column';
 import TaskForm from './TaskForm';
+import FilterBar from './FilterBar';
 import styles from './Board.module.css';
 
 export default function Board() {
-  const { tasks, loading, error, addTask } = useTasks();
+  const { tasks, loading, error, addTask, updateTask, deleteTask } = useTasks();
   const [isAddingTask, setIsAddingTask] = useState(false);
+  
+  // Filter states
+  const [priorityFilter, setPriorityFilter] = useState('all');
+  const [assigneeFilter, setAssigneeFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  
+  const debouncedSearch = useDebounce(search, 300);
+
+  // Compute unique assignees for the dropdown
+  const uniqueAssignees = useMemo(() => {
+    const assignees = new Set(tasks.map(t => t.assignee).filter(Boolean));
+    return Array.from(assignees).sort();
+  }, [tasks]);
+
+  // Derive filtered tasks based on all active filters combined
+  const filteredTasks = useMemo(() => {
+    return tasks.filter(task => {
+      const matchesPriority = priorityFilter === 'all' || task.priority === priorityFilter;
+      const matchesAssignee = assigneeFilter === 'all' || task.assignee === assigneeFilter;
+      const matchesSearch = !debouncedSearch || task.title.toLowerCase().includes(debouncedSearch.toLowerCase());
+      
+      return matchesPriority && matchesAssignee && matchesSearch;
+    });
+  }, [tasks, priorityFilter, assigneeFilter, debouncedSearch]);
 
   if (error) {
     return <div className={styles.error}>{error}</div>;
@@ -30,6 +56,16 @@ export default function Board() {
         </button>
       </div>
 
+      <FilterBar 
+        priority={priorityFilter}
+        setPriority={setPriorityFilter}
+        assignee={assigneeFilter}
+        setAssignee={setAssigneeFilter}
+        uniqueAssignees={uniqueAssignees}
+        search={search}
+        setSearch={setSearch}
+      />
+
       <div className={styles.boardContainer}>
         {/* 
           Counts are derived naturally from tasks.filter().length passed to each Column.
@@ -38,21 +74,21 @@ export default function Board() {
         <Column 
           title="To Do" 
           status="todo" 
-          tasks={tasks.filter(t => t.status === 'todo')}
+          tasks={filteredTasks.filter(t => t.status === 'todo')}
           updateTask={updateTask}
           deleteTask={deleteTask}
         />
         <Column 
           title="In Progress" 
           status="in-progress" 
-          tasks={tasks.filter(t => t.status === 'in-progress')}
+          tasks={filteredTasks.filter(t => t.status === 'in-progress')}
           updateTask={updateTask}
           deleteTask={deleteTask}
         />
         <Column 
           title="Done" 
           status="done" 
-          tasks={tasks.filter(t => t.status === 'done')}
+          tasks={filteredTasks.filter(t => t.status === 'done')}
           updateTask={updateTask}
           deleteTask={deleteTask}
         />
