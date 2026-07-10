@@ -67,3 +67,33 @@
   font-size: 0.75rem;
   font-weight: 600;
 }
+
+.actions {
+  display: flex;
+  gap: 6px;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #ebecf0;
+}
+
+.iconBtn {
+  background: transparent;
+  border: none;
+  color: #5e6c84;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.iconBtn:hover {
+  background-color: #ebecf0;
+  color: #172b4d;
+}
+
+.deleteBtn:hover {
+  background-color: #ffebe6;
+  color: #bf2600;
+}
+

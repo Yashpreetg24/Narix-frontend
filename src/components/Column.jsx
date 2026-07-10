@@ -2,7 +2,7 @@ import React from 'react';
 import TaskCard from './TaskCard';
 import styles from './Column.module.css';
 
-export default function Column({ title, status, tasks }) {
+export default function Column({ title, status, tasks, updateTask, deleteTask }) {
   return (
     <div className={styles.column}>
       <div className={styles.header}>
@@ -14,7 +14,12 @@ export default function Column({ title, status, tasks }) {
           <div className={styles.emptyState}>No tasks here.</div>
         ) : (
           tasks.map(task => (
-            <TaskCard key={task.id} task={task} />
+            <TaskCard 
+              key={task.id} 
+              task={task} 
+              updateTask={updateTask}
+              deleteTask={deleteTask}
+            />
           ))
         )}
       </div>

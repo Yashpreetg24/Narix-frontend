@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import TaskForm from './TaskForm';
 import styles from './TaskCard.module.css';
 
-export default function TaskCard({ task }) {
+export default function TaskCard({ task, updateTask, deleteTask }) {
+  const [isEditing, setIsEditing] = useState(false);
+
   const getPriorityClass = (priority) => {
     switch (priority) {
       case 'low': return styles.priorityLow;
@@ -14,6 +17,27 @@ export default function TaskCard({ task }) {
   const getInitial = (name) => {
     return name ? name.charAt(0).toUpperCase() : '?';
   };
+
+  const handleDelete = () => {
+    if (window.confirm('Are you sure you want to delete this task?')) {
+      deleteTask(task.id);
+    }
+  };
+
+  const handleUpdate = (updatedData) => {
+    updateTask(task.id, updatedData);
+    setIsEditing(false);
+  };
+
+  if (isEditing) {
+    return (
+      <TaskForm 
+        initialData={task}
+        onSubmit={handleUpdate}
+        onCancel={() => setIsEditing(false)}
+      />
+    );
+  }
 
   return (
     <div className={styles.card}>
@@ -28,6 +52,10 @@ export default function TaskCard({ task }) {
         <span className={styles.assignee} title={task.assignee}>
           {getInitial(task.assignee)}
         </span>
+      </div>
+      <div className={styles.actions}>
+        <button className={styles.iconBtn} onClick={() => setIsEditing(true)}>Edit</button>
+        <button className={`${styles.iconBtn} ${styles.deleteBtn}`} onClick={handleDelete}>Delete</button>
       </div>
     </div>
   );
