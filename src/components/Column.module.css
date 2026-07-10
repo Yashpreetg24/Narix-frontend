@@ -1,11 +1,10 @@
 .column {
-  flex: 1;
+  flex: 1 0 320px;
   background-color: #ebecf0;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   padding: 10px;
-  min-width: 300px;
 }
 
 .header {
