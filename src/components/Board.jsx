@@ -7,7 +7,7 @@ import FilterBar from './FilterBar';
 import styles from './Board.module.css';
 
 export default function Board() {
-  const { tasks, loading, error, addTask, updateTask, deleteTask } = useTasks();
+  const { tasks, loading, error, clearError, addTask, updateTask, deleteTask } = useTasks();
   const [isAddingTask, setIsAddingTask] = useState(false);
   
   // Filter states
@@ -34,14 +34,6 @@ export default function Board() {
     });
   }, [tasks, priorityFilter, assigneeFilter, debouncedSearch]);
 
-  if (error) {
-    return <div className={styles.error}>{error}</div>;
-  }
-
-  if (loading) {
-    return <div className={styles.loading}>Loading board...</div>;
-  }
-
   const handleAddTask = (taskData) => {
     addTask(taskData);
     setIsAddingTask(false);
@@ -55,6 +47,17 @@ export default function Board() {
           Add Task
         </button>
       </div>
+
+      {error && (
+        <div className={styles.errorBanner}>
+          <span>{error}</span>
+          <button className={styles.dismissBtn} onClick={clearError}>Dismiss</button>
+        </div>
+      )}
+
+      {loading && (
+        <div className={styles.loading}>Loading seed data...</div>
+      )}
 
       <FilterBar 
         priority={priorityFilter}

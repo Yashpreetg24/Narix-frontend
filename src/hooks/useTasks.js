@@ -66,11 +66,16 @@ export function useTasks() {
     setTasks(prev => (prev || []).filter(task => task.id !== id));
   };
 
+  const clearError = () => {
+    setError(null);
+  };
+
   // If tasks is still null (during initial render before effect runs or while fetching), expose as empty array
   return {
     tasks: tasks || [],
     loading,
     error,
+    clearError,
     addTask,
     updateTask,
     deleteTask
