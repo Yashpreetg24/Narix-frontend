@@ -1,0 +1,69 @@
+.card {
+  background-color: #ffffff;
+  border-radius: 6px;
+  padding: 12px;
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: grab;
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #172b4d;
+  word-break: break-word;
+}
+
+.description {
+  font-size: 0.85rem;
+  color: #5e6c84;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.priority {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.priorityLow {
+  background-color: #e3fcef;
+  color: #066637;
+}
+
+.priorityMedium {
+  background-color: #fffae6;
+  color: #b38600;
+}
+
+.priorityHigh {
+  background-color: #ffebe6;
+  color: #bf2600;
+}
+
+.assignee {
+  background-color: #dfe1e6;
+  color: #172b4d;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
