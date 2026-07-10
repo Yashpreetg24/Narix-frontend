@@ -31,20 +31,30 @@ export default function Board() {
       </div>
 
       <div className={styles.boardContainer}>
+        {/* 
+          Counts are derived naturally from tasks.filter().length passed to each Column.
+          This ensures they are always in sync and not stored in separate state.
+        */}
         <Column 
           title="To Do" 
           status="todo" 
-          tasks={tasks.filter(t => t.status === 'todo')} 
+          tasks={tasks.filter(t => t.status === 'todo')}
+          updateTask={updateTask}
+          deleteTask={deleteTask}
         />
         <Column 
           title="In Progress" 
           status="in-progress" 
-          tasks={tasks.filter(t => t.status === 'in-progress')} 
+          tasks={tasks.filter(t => t.status === 'in-progress')}
+          updateTask={updateTask}
+          deleteTask={deleteTask}
         />
         <Column 
           title="Done" 
           status="done" 
-          tasks={tasks.filter(t => t.status === 'done')} 
+          tasks={tasks.filter(t => t.status === 'done')}
+          updateTask={updateTask}
+          deleteTask={deleteTask}
         />
       </div>
 
