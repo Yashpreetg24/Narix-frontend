@@ -1,16 +1,32 @@
-# React + Vite
+# Sprint Board
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A lightweight, single-page React application for tracking tasks across To Do, In Progress, and Done columns. Built for performance and simplicity using Vite, React 18 hooks, and CSS Modules.
 
-Currently, two official plugins are available:
+## How to run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+3. Open the provided `localhost` URL in your browser.
 
-## React Compiler
+> **Note:** The application will fetch 12 seed tasks from `jsonplaceholder.typicode.com` on its very first load. After that, all data (including new tasks, edits, and deletions) is strictly persisted to your browser's `localStorage` under the key `sprintboard.tasks`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Key Design Decisions
 
-## Expanding the Oxlint configuration
+During development, several intentional decisions were made to keep the codebase tight, maintainable, and aligned with the project constraints:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+1. **Native Dropdowns over Drag-and-Drop:** I opted to use a simple `<select>` dropdown to move tasks between columns instead of implementing a drag-and-drop interface. This completely eliminates the need for heavy third-party libraries (like `react-beautiful-dnd`) and drastically reduces the surface area for edge cases while keeping the app highly accessible via keyboard navigation.
+2. **Derived State:** Filters (search, priority, assignee) and column task counts are entirely derived in `Board.jsx` on the fly using `useMemo`. By not storing "filtered tasks" or "column counts" in separate React state variables, we guarantee a single source of truth (`useTasks`) and completely eliminate state synchronization bugs.
+3. **Native Dialogs:** For destructive actions (like deleting a task), I used a native `window.confirm()` dialog instead of building a custom modal. This keeps the component tree shallow and the scope tightly focused on core functionality.
+
+## Known Gaps & Future Improvements
+
+To adhere to the strict time and scope constraints, a few features were knowingly left out:
+* **Undo Functionality:** There is currently no way to undo a deleted task or a status change.
+* **Automated Tests:** Unit and integration tests (e.g., using Jest/React Testing Library) were skipped to focus exclusively on functional UI delivery.
+* **Pagination / Virtualization:** If the board grows to thousands of tasks, the single continuous column scroll will become a performance bottleneck. `react-window` or similar virtualization would be the next step.
