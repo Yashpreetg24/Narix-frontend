@@ -47,10 +47,32 @@ export function useTasks() {
     fetchSeedData();
   }, [tasks, setTasks, loading]);
 
+  const addTask = (taskData) => {
+    const newTask = {
+      ...taskData,
+      id: crypto.randomUUID(), // generate unique ID
+      status: taskData.status || 'todo' // default status
+    };
+    setTasks(prev => [...(prev || []), newTask]);
+  };
+
+  const updateTask = (id, updatedData) => {
+    setTasks(prev => (prev || []).map(task => 
+      task.id === id ? { ...task, ...updatedData } : task
+    ));
+  };
+
+  const deleteTask = (id) => {
+    setTasks(prev => (prev || []).filter(task => task.id !== id));
+  };
+
   // If tasks is still null (during initial render before effect runs or while fetching), expose as empty array
   return {
     tasks: tasks || [],
     loading,
     error,
+    addTask,
+    updateTask,
+    deleteTask
   };
 }
