@@ -2,7 +2,7 @@
 
 A lightweight, single-page React application for tracking tasks across To Do, In Progress, and Done columns. Built for performance and simplicity using Vite, React 18 hooks, and CSS Modules.
 
-## How to run locally
+## How to run it locally
 
 1. Install dependencies:
    ```bash
@@ -16,7 +16,7 @@ A lightweight, single-page React application for tracking tasks across To Do, In
 
 > **Note:** The application will fetch 12 seed tasks from `jsonplaceholder.typicode.com` on its very first load. After that, all data (including new tasks, edits, and deletions) is strictly persisted to your browser's `localStorage` under the key `sprintboard.tasks`.
 
-## Key Design Decisions
+## Two or three decisions made and why
 
 During development, several intentional decisions were made to keep the codebase tight, maintainable, and aligned with the project constraints:
 
@@ -24,7 +24,7 @@ During development, several intentional decisions were made to keep the codebase
 2. **Derived State:** Filters (search, priority, assignee) and column task counts are entirely derived in `Board.jsx` on the fly using `useMemo`. By not storing "filtered tasks" or "column counts" in separate React state variables, we guarantee a single source of truth (`useTasks`) and completely eliminate state synchronization bugs.
 3. **Native Dialogs:** For destructive actions (like deleting a task), I used a native `window.confirm()` dialog instead of building a custom modal. This keeps the component tree shallow and the scope tightly focused on core functionality.
 
-## Known Gaps & Future Improvements
+## Anything knowingly left incomplete
 
 To adhere to the strict time and scope constraints, a few features were knowingly left out:
 * **Undo Functionality:** There is currently no way to undo a deleted task or a status change.
