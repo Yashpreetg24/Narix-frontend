@@ -19,7 +19,7 @@ export default function Board() {
 
   // Compute unique assignees for the dropdown
   const uniqueAssignees = useMemo(() => {
-    const assignees = new Set(tasks.map(t => t.assignee).filter(Boolean));
+    const assignees = new Set(tasks.map(t => (t.assignee || '').trim()).filter(Boolean));
     return Array.from(assignees).sort();
   }, [tasks]);
 

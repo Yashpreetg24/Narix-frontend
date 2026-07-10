@@ -19,11 +19,14 @@
   font-size: 0.95rem;
   color: #172b4d;
   word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .description {
   font-size: 0.85rem;
   color: #5e6c84;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .footer {
