@@ -29,6 +29,10 @@ export default function TaskCard({ task, updateTask, deleteTask }) {
     setIsEditing(false);
   };
 
+  const handleStatusChange = (e) => {
+    updateTask(task.id, { status: e.target.value });
+  };
+
   if (isEditing) {
     return (
       <TaskForm 
@@ -54,8 +58,20 @@ export default function TaskCard({ task, updateTask, deleteTask }) {
         </span>
       </div>
       <div className={styles.actions}>
-        <button className={styles.iconBtn} onClick={() => setIsEditing(true)}>Edit</button>
-        <button className={`${styles.iconBtn} ${styles.deleteBtn}`} onClick={handleDelete}>Delete</button>
+        <select 
+          className={styles.statusSelect}
+          value={task.status}
+          onChange={handleStatusChange}
+          aria-label="Change task status"
+        >
+          <option value="todo">To Do</option>
+          <option value="in-progress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+        <div className={styles.btnGroup}>
+          <button className={styles.iconBtn} onClick={() => setIsEditing(true)}>Edit</button>
+          <button className={`${styles.iconBtn} ${styles.deleteBtn}`} onClick={handleDelete}>Delete</button>
+        </div>
       </div>
     </div>
   );

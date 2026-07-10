@@ -70,10 +70,31 @@
 
 .actions {
   display: flex;
-  gap: 6px;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 8px;
   padding-top: 8px;
   border-top: 1px solid #ebecf0;
+}
+
+.statusSelect {
+  padding: 4px;
+  border: 1px solid #dfe1e6;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  background-color: #f4f5f7;
+  color: #172b4d;
+  cursor: pointer;
+}
+
+.statusSelect:focus {
+  outline: none;
+  border-color: #4c9aff;
+}
+
+.btnGroup {
+  display: flex;
+  gap: 6px;
 }
 
 .iconBtn {
