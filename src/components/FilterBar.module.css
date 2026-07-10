@@ -1,0 +1,40 @@
+.filterBar {
+  display: flex;
+  gap: 16px;
+  padding: 0 20px;
+  max-width: 1200px;
+  margin: 16px auto 0;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #172b4d;
+}
+
+.select, .input {
+  padding: 6px 10px;
+  border: 1px solid #dfe1e6;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  background-color: #ffffff;
+  color: #172b4d;
+}
+
+.select:focus, .input:focus {
+  outline: none;
+  border-color: #4c9aff;
+}
+
+.input {
+  min-width: 250px;
+}
